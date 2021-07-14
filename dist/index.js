@@ -14247,14 +14247,18 @@ if (! jSuites && typeof(require) === 'function') {
         var methods = jexcel.methods[Object.keys(jexcel.methods)[i]];
         for (var j = 0; j < Object.keys(methods).length; j++) {
             if (typeof(methods[Object.keys(methods)[j]]) == 'function') {
-                window[Object.keys(methods)[j]] = methods[Object.keys(methods)[j]];
+                if(typeof window !== "undefined") {
+                    window[Object.keys(methods)[j]] = methods[Object.keys(methods)[j]];
+                }
             } else {
-                window[Object.keys(methods)[j]] = function() {
-                    return Object.keys(methods)[j] + 'Not implemented';
+                if(typeof window !== "undefined") {
+                    window[Object.keys(methods)[j]] = function() {
+                        return Object.keys(methods)[j] + 'Not implemented';
+                    }    
                 }
             }
         }
     }
-
+    
     return jexcel;
 })));
